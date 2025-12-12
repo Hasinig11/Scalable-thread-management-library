@@ -1,0 +1,58 @@
+# Project Explanation: Scalable Thread Management System
+## A Beginner's Guide
+
+### 1. What is this project?
+Imagine you are the manager of a busy construction site. You have dozens of workers (threads) doing different jobs—some are digging (CPU work), some are waiting for cement trucks (IO wait), and some are on break (sleeping).
+
+Without a system, it's chaos. You don't know who is working, who is slacking, or if the site is running out of resources (CPU/Memory).
+
+**This project ("ThreadMaster") is that management system.** It gives you a control room (GUI) to hire workers, assign them to teams (Groups), watch them work via cameras (Dashboard), and fire them if they misbehave (Terminate).
+
+### 2. The Core Concepts
+
+#### Threads (The Workers)
+A "Thread" is a single sequence of instructions. 
+- In this app, we wrap normal threads in a `ManagedThread` suit.
+- **Why?** Normal threads can't be easily paused or stopped from the outside. Our wrapper adds "ears" to the thread so it listens for commands like "Pause" or "Stop".
+
+#### Thread Groups (The Teams)
+You might have 5 workers painting a wall. If the wall collapses, you want to stop ALL of them. 
+- `ThreadGroup` lets you treat a bunch of threads as one unit. You can say "Team Paint, stop working!" and they all stop.
+
+#### Thread Pool (The Job Queue)
+Sometimes you have 1000 tasks but only 4 workers. You can't hire 1000 workers (the computer would crash).
+- A `ThreadPool` is a line. You put 1000 tasks in the line. 
+- You have 4 workers. They take one task, finish it, and go back to the line for the next one. This is efficient and safe.
+
+#### Synchronization (Traffic Lights)
+When two threads try to use the same resource (like writing to a file) at the same time, data gets corrupted.
+- **Laws (Locks/Semaphores)**: We use tools to make threads wait their turn. The project demonstrates this with "Barriers" (everyone waits until the whole team is ready) and "Semaphores" (only N people allowed in the room).
+
+### 3. How the Code is Organized (`main.py`)
+
+The file is big (~2000 lines), but it's split into two main parts:
+
+**Part A: The Backend (Logic)**
+- `ThreadMaster`: The big boss. Keeps a list of everything.
+- `ManagedThread`: The smart worker.
+- `Worker`: The logic for pool workers.
+- *This part runs the actual OS commands and manages logic.*
+
+**Part B: The Frontend (GUI)**
+- `ThreadMonitorGUI`: This draws the windows, buttons, and graphs using `tkinter`.
+- It asks the Backend for data ("How many threads are running?") and updates the screen every second.
+
+### 4. Cool Features to Try
+1.  **The "Kill Switch"**: Go to the Dashboard and click "Terminate All". Watch code clean up every single mess instantly.
+2.  **Resource Graphs**: Start a "CPU Bound" thread from the Create tab. Watch the blue line on the CPU chart spike up!
+3.  **Pausing**: Creates a thread (e.g., Duration 60s). Go to the "Threads" tab, double click it, and hit "Pause". It stops counting runtime until you hit "Resume".
+
+### 5. Why is this useful?
+Learning this helps you understand:
+- How your Operating System manages programs.
+- Why your computer slows down when too many things are open.
+- How complex software (like Video Editors or Web Servers) handles doing many things at once without crashing.
+
+# Updated by Hasini
+
+# Updated by Hasini
